@@ -1,5 +1,7 @@
 # todoey
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2fc7824b9034c56a68475b0b2ad59ac)](https://app.codacy.com/manual/lucashilles/todoey?utm_source=github.com&utm_medium=referral&utm_content=lucashilles/todoey&utm_campaign=Badge_Grade_Dashboard)
+
 To do app.
 
 ## Getting Started
