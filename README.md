@@ -9,15 +9,25 @@ The main objective of this app is to make possible to take short notes and store
 ## Planned Features
 
 [x] To do list
-[X] Persistence
+
+[x] Persistence
+
 [x] Multiple lists
+
 [ ] Dark mode
+
 [ ] Store settings (Last active list, style config)
+
 [ ] Choose app colors
+
 [ ] Internationalizing
+
 [ ] Unit tests
+
 [ ] iOs build
+
 [ ] Automated deploy
+
 
 Any suggestions?
 Feel free to contribute with issues, PR's and tips!
