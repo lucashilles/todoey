@@ -1,10 +1,12 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todoey/models/task.dart';
+import 'package:synchronized/synchronized.dart';
 
 class DatabaseHelper {
   static DatabaseHelper _databaseHelper;
   static Database _database;
+  final _lock = Lock();
 
   DatabaseHelper._createInstance();
 
@@ -15,9 +17,56 @@ class DatabaseHelper {
     return _databaseHelper;
   }
 
-  Future<Database> get database async {
+  Future<Database> getDb() async {
     if (_database == null) {
-      _database = await initializeDatabase();
+      String databasesPath = await getDatabasesPath();
+
+      String path = join(databasesPath, 'strategic_core.db');
+
+      await _lock.synchronized(() async {
+        _database ??= await openDatabase(
+          path,
+          version: 1,
+          onCreate: (db, version) async {
+            Batch batch = db.batch();
+
+            batch.execute(
+                'CREATE TABLE tasks(taskid INTEGER PRIMARY KEY ASC AUTOINCREMENT, description TEXT, isdone INTEGER, tasklistid INTEGER)');
+            batch.execute(
+                'CREATE TABLE tasklists(tasklistid INTEGER PRIMARY KEY ASC AUTOINCREMENT, name TEXT)');
+            batch.insert('tasklists', {
+              'name': 'Do it!',
+            });
+            batch.insert('tasks', {
+              'description': 'Abra o menu no circulo branco',
+              'isdone': 0,
+              'tasklistid': 1
+            });
+            batch.insert('tasks', {
+              'description': 'Adicione uma nota no +',
+              'isdone': 0,
+              'tasklistid': 1
+            });
+            batch.insert('tasks', {
+              'description': 'Me deslize para me apagar',
+              'isdone': 0,
+              'tasklistid': 1
+            });
+            batch.insert('tasks', {
+              'description': 'Tarefa finalizada',
+              'isdone': 0,
+              'tasklistid': 1
+            });
+            batch.insert('tasks', {
+              'description': 'Você pode criar várias listas de notas',
+              'isdone': 0,
+              'tasklistid': 1
+            });
+
+            await batch.commit();
+          },
+        );
+      });
     }
     return _database;
   }
@@ -44,7 +93,7 @@ class DatabaseHelper {
   }
 
   Future<void> initializeTables() async {
-    Database db = await this.database;
+    Database db = await getDb();
     Batch batch = db.batch();
     batch.insert('tasklists', {
       'name': 'Do it!',
@@ -75,7 +124,7 @@ class DatabaseHelper {
   }
 
   Future<int> insertTask(Task task, int taskList) async {
-    Database db = await this.database;
+    Database db = await getDb();
     int id;
     List<Map<String, dynamic>> maps = await db.query('SQLITE_SEQUENCE',
         columns: ['seq'], where: 'name = ?', whereArgs: ['tasks']);
@@ -89,7 +138,7 @@ class DatabaseHelper {
   }
 
   Future<int> insertTaskList(String taskList) async {
-    Database db = await this.database;
+    Database db = await getDb();
     int id;
     List<Map<String, dynamic>> maps = await db.query('SQLITE_SEQUENCE',
         columns: ['seq'], where: 'name = ?', whereArgs: ['tasklists']);
@@ -99,35 +148,35 @@ class DatabaseHelper {
   }
 
   Future<List<Map<String, dynamic>>> getTaskLists() async {
-    Database db = await this.database;
+    Database db = await getDb();
     return db.query('tasklists');
   }
 
   Future<List<Map<String, dynamic>>> getTasks(int taskListID) async {
-    Database db = await this.database;
+    Database db = await getDb();
     return await db
         .query('tasks', where: 'tasklistid = ?', whereArgs: [taskListID]);
   }
 
   void updateTask(int id, bool isDone) async {
-    Database db = await this.database;
+    Database db = await getDb();
     db.update('tasks', {'isdone': (isDone ? 1 : 0)},
         where: 'taskid = ?', whereArgs: [id]);
   }
 
   void updateTaskList(int id, String name) async {
-    Database db = await this.database;
+    Database db = await getDb();
     db.update('tasklists', {'name': name},
         where: 'tasklistid = ?', whereArgs: [id]);
   }
 
   void deleteTask(int id) async {
-    Database db = await this.database;
+    Database db = await getDb();
     db.delete('tasks', where: 'taskid = ?', whereArgs: [id]);
   }
 
   void deleteTaskList(int id) async {
-    Database db = await this.database;
+    Database db = await getDb();
     db.delete('tasklists', where: 'tasklistid = ?', whereArgs: [id]);
   }
 }

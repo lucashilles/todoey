@@ -1,16 +1,23 @@
-# todoey
+# Todoey, Do it!, Doey, idk...
+[![license](https://img.shields.io/github/license/lucashilles/todoey?style=flat)](LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/af20f336dfaf48bfa68b64968cc34dc6)](https://www.codacy.com/manual/lucashilles/todoey?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lucashilles/todoey&amp;utm_campaign=Badge_Grade)
 
-To do app.
+This repo started as an exercise from the [The Complete 2020 Flutter Development Bootcamp with Dart](https://www.udemy.com/course/flutter-bootcamp-with-dart/), after that i decided to made the app fully functional with my touch as an way to study and get better at making flutter apps.
 
-## Getting Started
+The main objective of this app is to make possible to take short notes and store then, this was the baseline to all other features.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Planned Features
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+[x] To do list
+[X] Persistence
+[x] Multiple lists
+[ ] Dark mode
+[ ] Store settings (Last active list, style config)
+[ ] Choose app colors
+[ ] Internationalizing
+[ ] Unit tests
+[ ] iOs build
+[ ] Automated deploy
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Any suggestions?
+Feel free to contribute with issues, PR's and tips!
