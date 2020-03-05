@@ -13,6 +13,9 @@ class _AddTaskListScreenState extends State<AddTaskListScreen> {
   String taskListName;
 
   void _submit() {
+    if (taskListName == "" || taskListName == null) {
+      taskListName = "New Task List";
+    }
     if (widget.taskList == null) {
       Provider.of<TaskData>(context, listen: false).addTaskList(taskListName);
     } else {

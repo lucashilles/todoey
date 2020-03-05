@@ -178,5 +178,6 @@ class DatabaseHelper {
   void deleteTaskList(int id) async {
     Database db = await getDb();
     db.delete('tasklists', where: 'tasklistid = ?', whereArgs: [id]);
+    db.delete('tasks', where: 'tasklistid = ?', whereArgs: [id]);
   }
 }

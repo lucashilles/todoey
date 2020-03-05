@@ -11,8 +11,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   String taskName;
 
   void _submit() {
-    Provider.of<TaskData>(context, listen: false).addTask(taskName);
-    Navigator.pop(context);
+    if (taskName == "" || taskName == null) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Can't create empty task!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      Provider.of<TaskData>(context, listen: false).addTask(taskName);
+      Navigator.pop(context);
+    }
   }
 
   @override

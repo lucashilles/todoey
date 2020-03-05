@@ -16,9 +16,11 @@ The main objective of this app is to make possible to take short notes and store
 
 [ ] Dark mode
 
+[ ] Splash and Icons
+
 [ ] Store settings (Last active list, style config)
 
-[ ] Choose app colors
+[ ] Customize colors
 
 [ ] Dimensions relative to screen sizes
 
